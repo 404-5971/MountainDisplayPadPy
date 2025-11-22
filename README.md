@@ -71,6 +71,14 @@ Some linux distros will require a udev rule for user access to the USB device
 SUBSYSTEMS=="usb", ATTRS{idVendor}=="3282", ATTRS{idProduct}=="0009", MODE="0666", TAG+="uaccess"
 ```
 
+Some flavors of linux may not appreciate the uaccess tag so you may end up needing to modify the udev rule to apply a permission group to the device as follows:
+
+```
+ACTION=="add", SUBSYSTEMS=="usb", DRIVERS=="USB", ATTRS{idVendor}=="3282", ATTRS{idProduct}=="0009", MODE="0660", GROUP="plugdev"
+```
+
+ Then simply add the necessary users to the `plugdev` group for access.
+
 ## Configuring
 
 Example .json config files are located under `/panels` and per-user configs can be placed in `/home/{username}/.config/displaypad/panels/`
